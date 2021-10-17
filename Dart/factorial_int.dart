@@ -1,5 +1,8 @@
 import 'dart:math';
 
+/**
+ * Factorial generator
+ */
 int fact(int n, {int c = 1}) {
   if (n > 0) {
     c *= n;
@@ -9,6 +12,10 @@ int fact(int n, {int c = 1}) {
   return c;
 }
 
+/**
+ * Convert factorial strings to decimal numbers
+ * Better use BigInt to keep precision and avoid unexpected results
+ */
 int factString2Dec(String str) {
   List<BigInt> values = str
       .split("")
@@ -28,6 +35,9 @@ int factString2Dec(String str) {
   return res.toInt();
 }
 
+/**
+ * First attempt to convert factorial strings to decimal numbers
+ */
 int AfactString2Dec(String str) {
   List<int> values = str
       .split("")
@@ -45,6 +55,10 @@ int AfactString2Dec(String str) {
   return res;
 }
 
+/**
+ * Generate a factorial string from a decimal number.
+ * BigInt ensures that the input won't be modified by the compiler.
+ */
 String dec2FactString(int n) {
   List<BigInt> remainders = [];
   BigInt res = BigInt.from(n);
@@ -61,6 +75,27 @@ String dec2FactString(int n) {
       .join("");
 }
 
+/**
+ * First attempt to convert decimals to factorial strings
+ */
+String Adec2FactString(int n) {
+  List<String> remainders = [];
+  int result = n;
+
+  for (int i = 1; result > 0; i++) {
+    int remainder = result % i;
+    remainders.add((remainder > 9)
+        ? String.fromCharCode(remainder + 55)
+        : remainder.toString());
+    result = (result / i).floor();
+  }
+
+  return remainders.reversed.join("");
+}
+
+/**
+ * Second attempt to convert decimals to factorial strings
+ */
 String Bdec2FactString(int n) {
   List<String> remainders = [];
   BigInt result = BigInt.from(n);
@@ -79,21 +114,9 @@ String Bdec2FactString(int n) {
   return remainders.reversed.join("");
 }
 
-String Adec2FactString(int n) {
-  List<String> remainders = [];
-  int result = n;
-
-  for (int i = 1; result > 0; i++) {
-    int remainder = result % i;
-    remainders.add((remainder > 9)
-        ? String.fromCharCode(remainder + 55)
-        : remainder.toString());
-    result = (result / i).floor();
-  }
-
-  return remainders.reversed.join("");
-}
-
+/**
+ * Simple unit test function
+ */
 void testing(
     {dynamic value = 0, dynamic expected = 0, Function callback = print}) {
   dynamic result = callback(value);
